@@ -7,6 +7,10 @@ class WeatherModel {
   double? minTemp;
   String? weatherStateName;
   String? icon;
+  String? sunrise;
+  String? sunset;
+  String? windDirect;
+  double? wendSpeed;
 
   WeatherModel({
     required this.date,
@@ -14,7 +18,11 @@ class WeatherModel {
     required this.maxTemp,
     required this.minTemp,
     required this.weatherStateName,
-    required this.icon,
+    required String this.icon,
+    required this.sunrise,
+    required this.sunset,
+    required this.windDirect,
+    required this.wendSpeed
   });
 
   factory WeatherModel.fromJson(dynamic data) {
@@ -26,13 +34,18 @@ class WeatherModel {
       maxTemp: jsonData['maxtemp_c'],
       minTemp: jsonData['mintemp_c'],
       weatherStateName: jsonData['condition']['text'],
-      icon: jsonData['condition']['icon'],
+      icon: "https:${jsonData['condition']['icon']}",
+      windDirect: data['current']['wind_dir'],
+      wendSpeed: data['current']['wind_kph'],
+      sunrise: data['forecast']['forecastday'][0]['astro']['sunrise'],
+      sunset: data['forecast']['forecastday'][0]['astro']['sunset'],
     );
   }
   String getImage() {
     if (weatherStateName == 'Clear' || weatherStateName == 'Light Cloud') {
       return 'assets/images/clear.png';
-    } else if (weatherStateName == 'Thunderstorm' || weatherStateName == 'Thunder') {
+    } else if (weatherStateName == 'Thunderstorm' ||
+        weatherStateName == 'Thunder') {
       return 'assets/images/thunderstorm.png';
     } else if (weatherStateName == 'Sleet' ||
         weatherStateName == 'Snow' ||
@@ -40,17 +53,20 @@ class WeatherModel {
       return 'assets/images/snow.png';
     } else if (weatherStateName == 'Heavy Cloud') {
       return 'assets/images/cloudy.png';
-    } else if (weatherStateName == 'Light Rain' || weatherStateName == 'Heavy Rain' || weatherStateName == 'Showers') {
+    } else if (weatherStateName == 'Light Rain' ||
+        weatherStateName == 'Heavy Rain' ||
+        weatherStateName == 'Showers') {
       return 'assets/images/rainy.png';
     } else {
       return 'assets/images/clear.png';
     }
   }
-  
+
   MaterialColor getColors() {
     if (weatherStateName == 'Clear' || weatherStateName == 'Light Cloud') {
       return Colors.yellow;
-    } else if (weatherStateName == 'Thunderstorm' || weatherStateName == 'Thunder') {
+    } else if (weatherStateName == 'Thunderstorm' ||
+        weatherStateName == 'Thunder') {
       return Colors.blueGrey;
     } else if (weatherStateName == 'Sleet' ||
         weatherStateName == 'Snow' ||
@@ -58,7 +74,9 @@ class WeatherModel {
       return Colors.blue;
     } else if (weatherStateName == 'Heavy Cloud') {
       return Colors.blueGrey;
-    } else if (weatherStateName == 'Light Rain' || weatherStateName == 'Heavy Rain' || weatherStateName == 'Showers') {
+    } else if (weatherStateName == 'Light Rain' ||
+        weatherStateName == 'Heavy Rain' ||
+        weatherStateName == 'Showers') {
       return Colors.blue;
     } else {
       return Colors.yellow;

@@ -10,9 +10,10 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.indigo.shade900,
         title: Text(
           'Search a City',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -21,25 +22,50 @@ class SearchPage extends StatelessWidget {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: TextField(
-            onSubmitted: (data) async {
-              cityName = data;
-              BlocProvider.of<WeatherCubit>(
-                context,
-              ).getWeather(cityName: cityName!);
-              BlocProvider.of<WeatherCubit>(context).cityName;
-              Navigator.pop(context);
-            },
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(
-                vertical: 35,
-                horizontal: 20,
+          child: Column(
+            children: [
+              Image.asset('assets/images/weather4.jpg'),
+              TextField(
+                onSubmitted: (data) async {
+                  cityName = data;
+                  BlocProvider.of<WeatherCubit>(
+                    context,
+                  ).getWeather(cityName: cityName!);
+                  BlocProvider.of<WeatherCubit>(context).cityName;
+                  Navigator.pop(context);
+                },
+                decoration: InputDecoration(
+                  hintText: 'Enter a city name...',
+                  labelText: 'Search',
+                  prefixIcon: Icon(
+                    Icons.location_city_rounded,
+                    color: Colors.blueAccent,
+                  ),
+                  suffixIcon: Icon(Icons.search, color: Colors.blueAccent),
+                  filled: true,
+                  fillColor: Colors.blue.withValues(alpha: 0.05),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 30,
+                    horizontal: 20,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide.none,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(
+                      color: Colors.blueAccent.withOpacity(0.4),
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(color: Colors.blueAccent, width: 2),
+                  ),
+                ),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
-              border: OutlineInputBorder(),
-              label: Text('Search'),
-              suffixIcon: Icon(Icons.search),
-              hintText: 'Enter a City',
-            ),
+            ],
           ),
         ),
       ),
