@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/cubits/weather_cubit/weather_cubit.dart';
 import 'package:weather/cubits/weather_cubit/weather_state.dart';
-import 'package:weather/models/custom_weather_info.dart';
+import 'package:weather/widgets/custom_weather_day.dart';
+import 'package:weather/widgets/custom_weather_info.dart';
 import 'package:weather/models/weather_model.dart';
 import 'package:weather/pages/search_page.dart';
 
@@ -149,12 +150,34 @@ class successBody extends StatelessWidget {
                 ),
               ],
             ),
+
             const Spacer(),
             Text(
               weatherData!.weatherStateName.toString(),
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
             ),
             const Spacer(flex: 3),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: CustomWeatherDay(
+                      label: 'Tomorrow',
+                      data: weatherData!.tempDay2!.toInt().toString(),
+                    ),
+                  ),
+                  Expanded(
+                    child: CustomWeatherDay(
+                      label: 'In 2 Days',
+                      data: weatherData!.tempDay3!.toInt().toString(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
             WeatherInfoRow(
               icon: Icons.directions,
               label: 'Directon of wind',

@@ -11,6 +11,8 @@ class WeatherModel {
   String? sunset;
   String? windDirect;
   double? wendSpeed;
+  double? tempDay2;
+  double? tempDay3;
 
   WeatherModel({
     required this.date,
@@ -22,7 +24,9 @@ class WeatherModel {
     required this.sunrise,
     required this.sunset,
     required this.windDirect,
-    required this.wendSpeed
+    required this.wendSpeed,
+    required this.tempDay2,
+    required this.tempDay3,
   });
 
   factory WeatherModel.fromJson(dynamic data) {
@@ -39,6 +43,8 @@ class WeatherModel {
       wendSpeed: data['current']['wind_kph'],
       sunrise: data['forecast']['forecastday'][0]['astro']['sunrise'],
       sunset: data['forecast']['forecastday'][0]['astro']['sunset'],
+      tempDay2: data['forecast']['forecastday'][1]['day']['avgtemp_c'],
+      tempDay3: data['forecast']['forecastday'][2]['day']['avgtemp_c'],
     );
   }
   String getImage() {
